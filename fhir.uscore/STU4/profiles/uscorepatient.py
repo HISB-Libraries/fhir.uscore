@@ -103,3 +103,23 @@ class USCorePatient(Patient):
             elif telecom.value is None:
                 raise ValueError('value is required')
         return telecoms
+
+    @validator('meta')
+    def check_meta(cls, meta):
+        '''profile url set properly'''
+        profile_url = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"
+        meta_dict = meta.dict()
+        if meta is None:
+            raise ValueError('meta.profile must exist')
+        else:
+            if meta_dict["profile"] is None:
+                raise ValueError('meta.profile must exist')
+            elif isinstance(meta_dict["profile"], list):
+                for profile in meta_dict["profile"]:
+                    if not isinstance(profile, str):
+                        raise TypeError("profile.meta elements must be str")
+                if profile_url not in meta_dict["profile"]:
+                    raise ValueError("Missing profile url from meta.profile")
+            else:
+                raise TypeError('meta.profile must be list')
+        return meta
