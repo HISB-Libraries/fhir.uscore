@@ -12,9 +12,40 @@ from pydantic import validator, Field
 from fhir.resources.patient import Patient
 from fhir.resources import fhirtypes
 
+from ..extensions import uscorerace, uscoreethnicity, uscorebirthsex
+
 
 class USCorePatient(Patient):
     '''Defines constraints and extensions on the patient resource for the minimal set of data to query and retrieve patient demographic information.'''
+
+    meta: fhirtypes.MetaType = Field(
+        {"profile": ["http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"]},
+        alias="meta",
+        title="Metadata about the resource",
+        description=(
+            "The metadata about the resource. This is content that is maintained by"
+            " the infrastructure. Changes to the content might not always be "
+            "associated with version changes to the resource."
+        ),
+        # if property is element of this resource.
+        element_property=True,
+    )
+
+    extension: typing.List[typing.Union[uscorerace.USCoreRace, uscoreethnicity.USCoreEthnicity, uscorebirthsex.USCoreBirthSex]] = Field(
+        None,
+        alias="extension",
+        title="Additional content defined by implementations",
+        description=(
+            "May be used to represent additional information that is not part of "
+            "the basic definition of the resource. To make the use of extensions "
+            "safe and manageable, there is a strict set of governance  applied to "
+            "the definition and use of extensions. Though any implementer can "
+            "define an extension, there is a set of requirements that SHALL be met "
+            "as part of the definition of the extension."
+        ),
+        # if property is element of this resource.
+        element_property=True,
+    )
 
     gender: fhirtypes.Code = Field(
         ...,
@@ -72,4 +103,3 @@ class USCorePatient(Patient):
             elif telecom.value is None:
                 raise ValueError('value is required')
         return telecoms
-

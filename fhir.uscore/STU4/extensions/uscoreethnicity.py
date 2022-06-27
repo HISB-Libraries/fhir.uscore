@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Profile: http://hl7.org/fhir/us/core/StructureDefinition/us-core-race
+Profile: http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity
 Release: STU4
 Version: 4.0.0
 """
@@ -15,9 +15,9 @@ from fhir.resources import fhirtypes
 from pydantic import Field, root_validator, validator
 
 
-class USCoreRaceOMBCategory(Extension):
+class USCoreEthnicityOMBCategory(Extension):
     '''
-    American Indian or Alaska Native|Asian|Black or African American|Native Hawaiian or Other Pacific Islander|White
+    Hispanic or Latino|Not Hispanic or Latino
     '''
 
     url: fhirtypes.Uri = Field(
@@ -68,9 +68,9 @@ class USCoreRaceOMBCategory(Extension):
         return values
 
 
-class USCoreRaceDetailed(Extension):
+class USCoreEthnicityDetailed(Extension):
     '''
-    Extended race codes
+    Extended ethnicity codes
     '''
 
     url: fhirtypes.Uri = Field(
@@ -121,9 +121,9 @@ class USCoreRaceDetailed(Extension):
         return values
 
 
-class USCoreRaceText(Extension):
+class USCoreEthnicityText(Extension):
     '''
-    Race Text
+    Ethnicity Text
     '''
 
     url: fhirtypes.Uri = Field(
@@ -175,13 +175,13 @@ class USCoreRaceText(Extension):
         return values
 
 
-class USCoreRace(Extension):
+class USCoreEthnicity(Extension):
     '''
-    US Core Race Extension
+    US Core Ethnicity Extension
     '''
 
     url: fhirtypes.Uri = Field(
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race',
+        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity',
         const=True,
         alias="url",
         title="identifies the meaning of the extension",
@@ -194,7 +194,7 @@ class USCoreRace(Extension):
         element_required=True
     )
 
-    extension: typing.List[typing.Union[USCoreRaceOMBCategory, USCoreRaceDetailed, USCoreRaceText]] = Field(
+    extension: typing.List[typing.Union[USCoreEthnicityOMBCategory, USCoreEthnicityDetailed, USCoreEthnicityText]] = Field(
         None,
         alias="extension",
         title="Additional content defined by implementations",
@@ -215,7 +215,7 @@ class USCoreRace(Extension):
     @validator('extension')
     def validate_extensions(cls, extensions):
         '''
-        The text extension is required in the US Core Race Extension and the only extensions
+        The text extension is required in the US Core ethnicity Extension and the only extensions
         allowed are ombCategory, detailed, and text
         '''
 
@@ -223,27 +223,27 @@ class USCoreRace(Extension):
 
         for extension_obj in extensions:
             if extension_obj.url not in ['ombCategory', 'detailed', 'text']:
-                raise ValueError(f'Extension {extension_obj.url} is not allowed within the US Core Race extension')
+                raise ValueError(f'Extension {extension_obj.url} is not allowed within the US Core ethnicity extension')
             elif extension_obj.url == 'text':
                 text_extension = extension_obj
             elif extension_obj.url == 'ombCategory':
                 # Do something here to check ombCategory
-                omb_category_ext = USCoreRaceOMBCategory(**extension_obj.dict())
-                filename = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'hl7.fhir.us.core#4.0.0/ValueSet-omb-race-category.json'))
-                omb_race_category_vs = ValueSet.parse_file(
+                omb_category_ext = USCoreEthnicityOMBCategory(**extension_obj.dict())
+                filename = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'hl7.fhir.us.core#4.0.0/ValueSet-omb-ethnicity-category.json'))
+                omb_ethnicity_category_vs = ValueSet.parse_file(
                     filename, content_type="application/json", encoding="utf-8")
-                filtered_code_system = list(filter(lambda x: x.system == omb_category_ext.valueCoding.system, omb_race_category_vs.compose.include))
+                filtered_code_system = list(filter(lambda x: x.system == omb_category_ext.valueCoding.system, omb_ethnicity_category_vs.compose.include))
                 if len(filtered_code_system) == 0:
-                    raise ValueError(f'The code {omb_category_ext.valueCoding.code} from system {omb_category_ext.valueCoding.system} is not in the OMB Race Category ValueSet')
+                    raise ValueError(f'The code {omb_category_ext.valueCoding.code} from system {omb_category_ext.valueCoding.system} is not in the OMB ethnicity Category ValueSet')
                 filtered_codes = list(filter(lambda x: x.code == omb_category_ext.valueCoding.code, filtered_code_system[0].concept))
                 if len(filtered_codes) == 0:
-                    raise ValueError(f'Code {omb_category_ext.valueCoding.code} is not in the OMB Race Category ValueSet')
+                    raise ValueError(f'Code {omb_category_ext.valueCoding.code} is not in the OMB ethnicity Category ValueSet')
                 if omb_category_ext.valueCoding.display != filtered_codes[0].display:
                     raise ValueError(f'The display for the ombCategory was found to be {omb_category_ext.valueCoding.display}. It should be {filtered_codes[0].display}')
             elif extension_obj.url == 'detailed':
                 # TODO: this cannot be done with the package-downloaded ValueSet, need to find a work-around
                 pass
         if not text_extension:
-            raise ValueError('text extension required for US Core Race Extension')
+            raise ValueError('text extension required for US Core Ethnicity Extension')
 
         return extensions
