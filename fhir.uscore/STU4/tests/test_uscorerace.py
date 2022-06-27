@@ -39,5 +39,3 @@ def test_us_core_extension_1():
     us_core_race_extension = uscorerace.USCoreRace(extension=extension_test_1)
 
     assert us_core_race_extension.url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race'
-    for extension in us_core_race_extension.extension:
-        print(type(extension))
