@@ -8,11 +8,14 @@ Version: 4.0.0
 import typing
 import os
 
+from fhir.resources.codeableconcept import CodeableConcept
 from fhir.resources.extension import Extension
 from fhir.resources.valueset import ValueSet
 from fhir.resources import fhirtypes
 
 from pydantic import Field, root_validator, validator
+
+from ..helpers import check_cc_in_valueset
 
 
 class USCoreRaceOMBCategory(Extension):
@@ -232,14 +235,9 @@ class USCoreRace(Extension):
                 filename = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'hl7.fhir.us.core#4.0.0/ValueSet-omb-race-category.json'))
                 omb_race_category_vs = ValueSet.parse_file(
                     filename, content_type="application/json", encoding="utf-8")
-                filtered_code_system = list(filter(lambda x: x.system == omb_category_ext.valueCoding.system, omb_race_category_vs.compose.include))
-                if len(filtered_code_system) == 0:
-                    raise ValueError(f'The code {omb_category_ext.valueCoding.code} from system {omb_category_ext.valueCoding.system} is not in the OMB Race Category ValueSet')
-                filtered_codes = list(filter(lambda x: x.code == omb_category_ext.valueCoding.code, filtered_code_system[0].concept))
-                if len(filtered_codes) == 0:
-                    raise ValueError(f'Code {omb_category_ext.valueCoding.code} is not in the OMB Race Category ValueSet')
-                if omb_category_ext.valueCoding.display != filtered_codes[0].display:
-                    raise ValueError(f'The display for the ombCategory was found to be {omb_category_ext.valueCoding.display}. It should be {filtered_codes[0].display}')
+                cc_check = check_cc_in_valueset(CodeableConcept(coding=[omb_category_ext.valueCoding]), omb_race_category_vs)
+                if isinstance(cc_check, ValueError):
+                    raise cc_check
             elif extension_obj.url == 'detailed':
                 # TODO: this cannot be done with the package-downloaded ValueSet, need to find a work-around
                 pass

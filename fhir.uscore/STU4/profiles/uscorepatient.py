@@ -112,7 +112,7 @@ class USCorePatient(Patient):
         if meta is None:
             raise ValueError('meta.profile must exist')
         else:
-            if meta_dict["profile"] is None:
+            if 'profile' not in meta_dict:
                 raise ValueError('meta.profile must exist')
             elif isinstance(meta_dict["profile"], list):
                 for profile in meta_dict["profile"]:
