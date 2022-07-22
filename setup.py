@@ -8,7 +8,7 @@ requirements = ["fhir.resources>=6.4.0"]
 
 setuptools.setup(
     name="fhir.uscore",
-    version="0.0.1",
+    version="0.1",
     author="Andrew Stevens",
     author_email="andrew.stevens@gtri.gatech.edu",
     description="Model classes for US Core FHIR Resources",
