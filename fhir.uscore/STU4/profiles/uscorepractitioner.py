@@ -65,9 +65,11 @@ class USCorePractitioner(Practitioner):
                 raise ValueError('Identifier.system is required')
             if not identifier.value:
                 raise ValueError('Identifier.value is required')
+        return identifiers
 
     @validator('name')
     def check_name(cls, names):
         for name in names:
             if not name.family:
                 raise ValueError('Name.family is required')
+        return names

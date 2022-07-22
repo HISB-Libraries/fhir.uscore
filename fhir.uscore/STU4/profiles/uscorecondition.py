@@ -94,6 +94,7 @@ class USCoreCondition(Condition):
             cc_check = check_cc_in_valueset(single, us_core_condition_category)
             if isinstance(cc_check, ValueError):
                 raise cc_check
+        return category
 
     @validator('code')
     def check_code(cls, code):
@@ -103,3 +104,4 @@ class USCoreCondition(Condition):
         cc_check = validate_code_tx_server(code, us_core_condition_code)
         if isinstance(cc_check, ValueError):
             raise cc_check
+        return code

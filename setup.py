@@ -13,8 +13,6 @@ setuptools.setup(
     author_email="andrew.stevens@gtri.gatech.edu",
     description="Model classes for US Core FHIR Resources",
     install_requires=requirements,
-    long_description=long_description,
-    long_description_content_type="text/markdown",
     url="https://github.com/SmartChartSuite/fhir.uscore",
     project_urls={
         "Bug Tracker": "https://github.com/SmartChartSuite/fhir.uscore/issues",

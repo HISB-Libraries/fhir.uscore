@@ -73,15 +73,18 @@ class USCorePractitionerRole(PractitionerRole):
         return meta
 
     @validator('code')
-    def check_code(cls, code):
-        if code.coding[0].system != 'http://nucc.org/provider-taxonomy':
-            raise ValueError(f'Code {code.coding[0].code} must be from system http://nucc.org/provider-taxonomy')
+    def check_code(cls, codes):
+        for code in codes:
+            if code.coding[0].system != 'http://nucc.org/provider-taxonomy':
+                raise ValueError(f'Code {code.coding[0].code} must be from system http://nucc.org/provider-taxonomy')
+        return codes
 
     @validator('specialty')
     def check_specialty(cls, specialties):
         for specialty in specialties:
-            if specialty.coding[0].system != 'HealthCareProviderTaxonomy':
-                raise ValueError('Specialty.coding.system must be HealthCareProviderTaxonomy')
+            if specialty.coding[0].system != 'http://nucc.org/provider-taxonomy':
+                raise ValueError('Specialty.coding.system must be http://nucc.org/provider-taxonomy')
+        return specialties
 
     @validator('telecom')
     def check_telecom(cls, telecoms):

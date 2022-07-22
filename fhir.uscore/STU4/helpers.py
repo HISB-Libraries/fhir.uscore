@@ -17,13 +17,17 @@ def check_cc_in_valueset(cc: CodeableConcept, vs: ValueSet) -> None | ValueError
     if len(filtered_codes) == 0:
         return ValueError(f'Code {cc.coding[0].code} is not in the {vs.title} ValueSet')
     if cc.coding[0].display != filtered_codes[0].display:
-        return ValueError(f'The display for the ombCategory was found to be {cc.coding[0].display}. It should be {filtered_codes[0].display}')
+        print(f'\nWARNING: The display was found to be {cc.coding[0].display}. It should be {filtered_codes[0].display}')
+        return None
 
 
 def validate_code_tx_server(cc: CodeableConcept, vs: ValueSet):
     '''Using tx.fhir.org to validate if code in ValueSet'''
 
     response = requests.post(f'https://tx.fhir.org/r4/ValueSet/{vs.id.split(":")[0]}/$validate-code?code={cc.coding[0].code}&system={cc.coding[0].system}', headers={'Accept': 'application/json'})
+    if response.status_code != 200:
+        print('\nWARNING: Something is wrong with the terminology server. Therefore terminology cannot be validated.')
+        return None
     resp_result = list(filter(lambda x: x['name'] == 'result', response.json()['parameter']))[0]['valueBoolean']
     if resp_result == 'false':
         cause = list(filter(lambda x: x['name'] == 'cause', response.json()['parameter']))[0]['valueString']

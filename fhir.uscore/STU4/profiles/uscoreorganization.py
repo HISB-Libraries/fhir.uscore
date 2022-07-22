@@ -57,3 +57,4 @@ class USCoreOrganization(Organization):
         for address in addresses:
             if address.line and len(address.line) > 4:
                 raise ValueError('There is a maximum cardinality of 4 for Address.line')
+        return addresses

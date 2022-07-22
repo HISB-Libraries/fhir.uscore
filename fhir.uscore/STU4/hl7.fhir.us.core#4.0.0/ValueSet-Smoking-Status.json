@@ -1,0 +1,56 @@
+{
+    "resourceType": "ValueSet",
+    "id": "2.16.840.1.113883.11.20.9.38",
+    "meta": {
+        "versionId": "18",
+        "lastUpdated": "2017-09-15T01:00:04.000-04:00"
+    },
+    "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h3>Value Set Contents</h3><p>This value set contains 8 concepts</p><p>All codes from system <code>http://snomed.info/sct</code></p><table class=\"codes\"><tr><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display</b></td></tr><tr><td style=\"white-space:nowrap\"><a name=\"http---snomed.info-sct-266919005\"> </a><a href=\"http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=266919005\">266919005</a></td><td>Never smoked tobacco (finding)</td></tr><tr><td style=\"white-space:nowrap\"><a name=\"http---snomed.info-sct-266927001\"> </a><a href=\"http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=266927001\">266927001</a></td><td>Tobacco smoking consumption unknown (finding)</td></tr><tr><td style=\"white-space:nowrap\"><a name=\"http---snomed.info-sct-428041000124106\"> </a><a href=\"http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=428041000124106\">428041000124106</a></td><td>Occasional tobacco smoker (finding)</td></tr><tr><td style=\"white-space:nowrap\"><a name=\"http---snomed.info-sct-428061000124105\"> </a><a href=\"http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=428061000124105\">428061000124105</a></td><td>Light tobacco smoker (finding)</td></tr><tr><td style=\"white-space:nowrap\"><a name=\"http---snomed.info-sct-428071000124103\"> </a><a href=\"http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=428071000124103\">428071000124103</a></td><td>Heavy tobacco smoker (finding)</td></tr><tr><td style=\"white-space:nowrap\"><a name=\"http---snomed.info-sct-449868002\"> </a><a href=\"http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=449868002\">449868002</a></td><td>Smokes tobacco daily (finding)</td></tr><tr><td style=\"white-space:nowrap\"><a name=\"http---snomed.info-sct-77176002\"> </a><a href=\"http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=77176002\">77176002</a></td><td>Smoker (finding)</td></tr><tr><td style=\"white-space:nowrap\"><a name=\"http---snomed.info-sct-8517006\"> </a><a href=\"http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=8517006\">8517006</a></td><td>Ex-smoker (finding)</td></tr></table></div>"
+    },
+    "url": "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.11.20.9.38",
+    "version": "20170915",
+    "name": "Smoking Status",
+    "status": "active",
+    "date": "2017-09-15T01:00:04-04:00",
+    "publisher": "HL7 Terminology",
+    "compose": {
+        "include": [{
+            "system": "http://snomed.info/sct",
+            "concept": [{
+                    "code": "266919005",
+                    "display": "Never smoked tobacco (finding)"
+                },
+                {
+                    "code": "266927001",
+                    "display": "Tobacco smoking consumption unknown (finding)"
+                },
+                {
+                    "code": "428041000124106",
+                    "display": "Occasional tobacco smoker (finding)"
+                },
+                {
+                    "code": "428061000124105",
+                    "display": "Light tobacco smoker (finding)"
+                },
+                {
+                    "code": "428071000124103",
+                    "display": "Heavy tobacco smoker (finding)"
+                },
+                {
+                    "code": "449868002",
+                    "display": "Smokes tobacco daily (finding)"
+                },
+                {
+                    "code": "77176002",
+                    "display": "Smoker (finding)"
+                },
+                {
+                    "code": "8517006",
+                    "display": "Ex-smoker (finding)"
+                }
+            ]
+        }]
+    }
+}
