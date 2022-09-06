@@ -1,14 +1,14 @@
 '''Setup file for fhir.uscore package'''
-import setuptools
+from setuptools import setup, find_namespace_packages
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 requirements = ["fhir.resources>=6.4.0", "requests==2.28.1"]
 
-setuptools.setup(
+setup(
     name="fhir.uscore",
-    version="0.1.1",
+    version="0.1.2",
     author="Andrew Stevens",
     author_email="andrew.stevens@gtri.gatech.edu",
     description="Model classes for US Core FHIR Resources",
@@ -34,7 +34,6 @@ setuptools.setup(
         "Intended Audience :: Science/Research",
         "Typing :: Typed"
     ],
-    packages=setuptools.find_packages(),
-    python_requires=">=3.10",
-    package_data={'fhirgenerator.tests.input': ['config.json']}
+    packages=find_namespace_packages(include=["fhir*"]),
+    python_requires=">=3.6",
 )
